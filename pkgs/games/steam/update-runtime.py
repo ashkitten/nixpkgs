@@ -102,7 +102,7 @@ args = parse_args()
 REPO=args.repo
 
 if args.beta:
-	DIST="steam_beta"
+	DIST="scout_beta"
 
 if args.debug:
 	COMPONENT = "debug"
