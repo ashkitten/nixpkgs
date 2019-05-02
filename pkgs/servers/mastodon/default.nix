@@ -1,5 +1,5 @@
 { nodejs-slim, mkYarnPackage, fetchFromGitHub, bundlerEnv,
-  stdenv, yarn, ... }:
+  stdenv, yarn, lib, ... }:
 
 let
   version = "v2.8.0";
@@ -81,4 +81,11 @@ in stdenv.mkDerivation {
     mkdir -p $out
     cp -r * $out/
   '';
+
+  meta = {
+    description = "Self-hosted, globally interconnected microblogging software based on ActivityPub";
+    homepage = https://joinmastodon.org;
+    license = lib.licenses.agpl3;
+    maintainers = [ lib.maintainers.petabyteboy ];
+  };
 }
