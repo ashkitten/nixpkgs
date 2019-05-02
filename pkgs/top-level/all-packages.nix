@@ -24272,4 +24272,6 @@ in
 
   dapper = callPackage ../development/tools/dapper { };
 
+  mastodon = callPackage ../servers/mastodon {};
+
 }
