@@ -33,6 +33,7 @@ let
   mastodon-js-modules = mkYarnPackage {
     name = "mastodon-modules";
     yarnNix = ./yarn.nix;
+    packageJSON = ./package.json;
     inherit src;
   };
 
