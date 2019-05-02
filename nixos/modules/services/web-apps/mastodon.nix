@@ -9,14 +9,11 @@ let
   env = {
     RAILS_ENV = "production";
     NODE_ENV = "production";
-    SECRET_KEY_BASE = cfg.secretKeyBase;
-    OTP_SECRET = cfg.otpSecret;
-    VAPID_PRIVATE_KEY = cfg.vapidPrivateKey;
+
     VAPID_PUBLIC_KEY = cfg.vapidPublicKey;
     DB_USER = cfg.dbUser;
-    DB_PASS = cfg.dbPass;
     SMTP_LOGIN  = cfg.smtpLogin;
-    SMTP_PASSWORD = cfg.smtpPassword;
+
     REDIS_HOST = cfg.redisHost;
     REDIS_PORT = toString(cfg.redisPort);
     DB_HOST = cfg.dbHost;
@@ -65,29 +62,30 @@ in {
         default = 55002;
       };
 
-      secretKeyBase = lib.mkOption {
-        type = lib.types.str;
-      };
-      otpSecret = lib.mkOption {
-        type = lib.types.str;
-      };
-      vapidPrivateKey = lib.mkOption {
-        type = lib.types.str;
-      };
-      vapidPublicKey = lib.mkOption {
-        type = lib.types.str;
-      };
       dbUser = lib.mkOption {
         type = lib.types.str;
         default = "mastodon";
       };
-      dbPass = lib.mkOption {
+      vapidPublicKey = lib.mkOption {
         type = lib.types.str;
       };
       smtpLogin = lib.mkOption {
         type = lib.types.str;
       };
-      smtpPassword = lib.mkOption {
+
+      secretKeyBaseFile = lib.mkOption {
+        type = lib.types.str;
+      };
+      otpSecretFile = lib.mkOption {
+        type = lib.types.str;
+      };
+      vapidPrivateKeyFile = lib.mkOption {
+        type = lib.types.str;
+      };
+      dbPassFile = lib.mkOption {
+        type = lib.types.str;
+      };
+      smtpPasswordFile = lib.mkOption {
         type = lib.types.str;
       };
 
@@ -149,6 +147,16 @@ in {
         chown ${cfg.user}:${cfg.group} ${tmpDir}
         chown ${cfg.user}:${cfg.group} ${logDir}
         chown ${cfg.user}:${cfg.group} ${cfg.dataDir}
+
+        umask 077
+        cat > ${tmpDir}/.secrets_env <<EOF
+        SECRET_KEY_BASE=$(cat ${cfg.secretKeyBaseFile})
+        OTP_SECRET=$(cat ${cfg.otpSecretFile})
+        VAPID_PRIVATE_KEY=$(cat ${cfg.vapidPrivateKeyFile})
+        DB_PASS=$(cat ${cfg.dbPassFile})
+        SMTP_PASSWORD=$(cat ${cfg.smtpPasswordFile})
+        EOF
+        chown ${cfg.user}:${cfg.group} ${tmpDir}/.secrets_env
       '';
       serviceConfig = {
         Type = "oneshot";
@@ -168,6 +176,7 @@ in {
         Type = "oneshot";
         User = cfg.user;
         Group = cfg.group;
+        EnvironmentFile = "${tmpDir}/.secrets_env";
       };
       after = [ "mastodon-init-dirs.service" "network.target" ];
       wantedBy = [ "multi-user.target" ];
@@ -187,6 +196,7 @@ in {
         User = cfg.user;
         Group = cfg.group;
         WorkingDirectory = pkgs.mastodon;
+        EnvironmentFile = "${tmpDir}/.secrets_env";
       };
     };
 
@@ -204,6 +214,7 @@ in {
         User = cfg.user;
         Group = cfg.group;
         WorkingDirectory = pkgs.mastodon;
+        EnvironmentFile = "${tmpDir}/.secrets_env";
       };
       path = with pkgs; [ file imagemagick ffmpeg ];
     };
@@ -222,6 +233,7 @@ in {
         User = cfg.user;
         Group = cfg.group;
         WorkingDirectory = pkgs.mastodon;
+        EnvironmentFile = "${tmpDir}/.secrets_env";
       };
     };
 
