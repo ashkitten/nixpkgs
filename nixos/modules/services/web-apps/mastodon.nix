@@ -43,10 +43,6 @@ in {
         type = lib.types.bool;
         default = true;
       };
-      createUser = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-      };
       user = lib.mkOption {
         type = lib.types.str;
         default = "mastodon";
@@ -252,12 +248,14 @@ in {
       };
     };
 
-    users = lib.mkIf cfg.createUser {
-      users."${cfg.user}" = {
-        group = cfg.group;
-        isSystemUser = true;
-      };
-      groups."${cfg.group}" = {};
+    users.users.mastodon = lib.mkIf (cfg.user == "mastodon") {
+      uid = config.ids.uids.mastodon;
+      isSystemUser = true;
+      inherit (cfg) group;
+    };
+
+    users.groups.mastodon = lib.mkIf (cfg.group == "mastodon") {
+      gid = config.ids.gids.mastodon;
     };
   };
 
