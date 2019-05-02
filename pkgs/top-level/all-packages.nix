@@ -6915,6 +6915,9 @@ in
 
   yarn = callPackage ../development/tools/yarn  { };
 
+  inherit (callPackage ../development/tools/yarn2nix { })
+    yarn2nix mkYarnPackage;
+
   yasr = callPackage ../applications/audio/yasr { };
 
   yank = callPackage ../tools/misc/yank { };
