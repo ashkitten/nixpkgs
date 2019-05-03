@@ -379,6 +379,7 @@ in rec {
     # yarn2nix is the only package that requires the yarnNix option.
     # All the other projects can auto-generate that file.
     yarnNix = ./yarn.nix;
+    packageJSON = ./package.json;
 
     yarnFlags = defaultYarnFlags ++ ["--production=true"];
 
