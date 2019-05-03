@@ -1,4 +1,4 @@
-{ fetchurl, linkFarm, runCommandNoCC, gnutar }: rec {
+{ fetchurl, fetchgit, linkFarm, runCommandNoCC, gnutar }: rec {
   offline_cache = linkFarm "offline" packages;
   packages = [
     {
@@ -3349,10 +3349,10 @@
     name = "emoji-mart";
     path =
       let
-        repo = builtins.fetchGit {
+        repo = fetchgit {
           url = "https://github.com/Gargron/emoji-mart";
-          ref = "build";
           rev = "ff00dc470b5b2d9f145a6d6e977a54de5df2b4c9";
+          sha256 = "09y8lj7ld3jb9qsr3xflhzlw93hx3ij1ic6fffi3a65cqg03scv0";
         };
       in
         runCommandNoCC "emoji-mart" { buildInputs = [gnutar]; } ''
