@@ -1,7 +1,7 @@
 {
   "name": "mastodon",
   "license": "AGPL-3.0-or-later",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "engines": {
     "node": ">=8 <11"
   },
@@ -79,6 +79,7 @@
     "babel-plugin-react-intl": "^3.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-runtime": "^6.26.0",
+    "blurhash": "^1.0.0",
     "classnames": "^2.2.5",
     "compression-webpack-plugin": "^2.0.0",
     "cross-env": "^5.1.4",

@@ -1,26 +1,53 @@
-From 1bbd6ae3628302fa0ab610bd3048ff8c7dacb0ea Mon Sep 17 00:00:00 2001
+From 8cdd2c80f2b486f1961e995efc6d51eaf59e8f9d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Milan=20P=C3=A4ssler?= <me@pbb.lc>
 Date: Sun, 21 Apr 2019 22:49:37 +0200
-Subject: [PATCH] foo
+Subject: [PATCH] changes for nix packaging
 
 ---
+ Gemfile      | 2 +-
+ Gemfile.lock | 1 +
  package.json | 3 ++-
  yarn.lock    | 4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ 4 files changed, 6 insertions(+), 4 deletions(-)
 
+diff --git a/Gemfile b/Gemfile
+index db00c24fb..e1e2caf95 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -52,7 +52,7 @@ gem 'redis-namespace', '~> 1.5'
+ gem 'htmlentities', '~> 4.3'
+ gem 'http', '~> 3.3'
+ gem 'http_accept_language', '~> 2.1'
+-gem 'http_parser.rb', '~> 0.6', git: 'https://github.com/tmm1/http_parser.rb', ref: '54b17ba8c7d8d20a16dfc65d1775241833219cf2'
++gem 'http_parser.rb', '~> 0.6', git: 'https://github.com/tmm1/http_parser.rb', ref: '54b17ba8c7d8d20a16dfc65d1775241833219cf2', submodules: true
+ gem 'httplog', '~> 1.2'
+ gem 'idn-ruby', require: 'idn'
+ gem 'kaminari', '~> 1.1'
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 7ab907f6d..3df345661 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -9,6 +9,7 @@ GIT
+   remote: https://github.com/tmm1/http_parser.rb
+   revision: 54b17ba8c7d8d20a16dfc65d1775241833219cf2
+   ref: 54b17ba8c7d8d20a16dfc65d1775241833219cf2
++  submodules: true
+   specs:
+     http_parser.rb (0.6.1)
+ 
 diff --git a/package.json b/package.json
-index 63cfa25b8..b6230db36 100644
+index 67396ccc3..61743a9b1 100644
 --- a/package.json
 +++ b/package.json
 @@ -1,6 +1,7 @@
  {
    "name": "mastodon",
    "license": "AGPL-3.0-or-later",
-+  "version": "2.8.0",
++  "version": "2.8.1",
    "engines": {
      "node": ">=8 <11"
    },
-@@ -85,7 +86,7 @@
+@@ -86,7 +87,7 @@
      "cssnano": "^4.1.10",
      "detect-passive-events": "^1.0.2",
      "dotenv": "^6.2.0",
@@ -30,10 +57,10 @@ index 63cfa25b8..b6230db36 100644
      "escape-html": "^1.0.3",
      "exif-js": "^2.3.0",
 diff --git a/yarn.lock b/yarn.lock
-index 9d7f0eccb..9dd358143 100644
+index 329216cdb..614a14f70 100644
 --- a/yarn.lock
 +++ b/yarn.lock
-@@ -3173,9 +3173,9 @@ elliptic@^6.0.0:
+@@ -3178,9 +3178,9 @@ elliptic@^6.0.0:
      minimalistic-assert "^1.0.0"
      minimalistic-crypto-utils "^1.0.0"
  
@@ -46,5 +73,5 @@ index 9d7f0eccb..9dd358143 100644
  emoji-regex@^6.5.1:
    version "6.5.1"
 -- 
-2.19.2
+2.21.0
 

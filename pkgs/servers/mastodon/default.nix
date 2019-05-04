@@ -2,7 +2,7 @@
   stdenv, yarn, lib, ... }:
 
 let
-  version = "v2.8.0";
+  version = "v2.8.1";
   tmpDir = "/tmp/mastodon";
   logDir = "/var/log/mastodon";
 
@@ -11,8 +11,8 @@ let
     src = fetchFromGitHub {
       owner = "tootsuite";
       repo = "mastodon";
-      rev = "6afab2587de40d403e64724f6ae688b180de25d4";
-      sha256 = "12nb687ly11di6l508cf9719mqk89iggngj80dvmpy1qzdib5nd4";
+      rev = version;
+      sha256 = "03wyk4b9jgbmp6izf4zr5fhh8gam4j83cb91j4xh9qfgdx0nzh8c";
     };
     patches = [ ./mastodon-nix.patch ];
     dontConfigure = true;

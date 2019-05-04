@@ -1762,6 +1762,14 @@
       };
     }
     {
+      name = "blurhash___blurhash_1.0.0.tgz";
+      path = fetchurl {
+        name = "blurhash___blurhash_1.0.0.tgz";
+        url  = "https://registry.yarnpkg.com/blurhash/-/blurhash-1.0.0.tgz";
+        sha1 = "9087bc5cc4d482f1305059d7410df4133adcab2e";
+      };
+    }
+    {
       name = "bn.js___bn.js_4.11.8.tgz";
       path = fetchurl {
         name = "bn.js___bn.js_4.11.8.tgz";
