@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  tmpDir = "/tmp/mastodon";
-  logDir = "/var/log/mastodon";
-
   cfg = config.services.mastodon;
 
   env = {
@@ -23,7 +20,7 @@ let
     SMTP_SERVER = cfg.smtpServer;
     SMTP_PORT = toString(cfg.smtpPort);
     SMTP_FROM_ADDRESS = cfg.smtpFromAddress;
-    PAPERCLIP_ROOT_PATH = "${cfg.dataDir}/public-system";
+    PAPERCLIP_ROOT_PATH = "/var/lib/mastodon/public-system";
     PAPERCLIP_ROOT_URL = "/system";
     ES_ENABLED = if (cfg.elasticsearchHost != null) then "true" else "false";
     ES_HOST = cfg.elasticsearchHost;
@@ -59,17 +56,17 @@ in {
 
       streamingPort = lib.mkOption {
         description = "TCP port used by the mastodon-streaming service";
-        type = lib.types.int;
+        type = lib.types.port;
         default = 55000;
       };
       webPort = lib.mkOption {
         description = "TCP port used by the mastodon-web service";
-        type = lib.types.int;
+        type = lib.types.port;
         default = 55001;
       };
       sidekiqPort = lib.mkOption {
         description = "TCP port used by the mastodon-sidekiq service";
-        type = lib.types.int;
+        type = lib.types.port;
         default = 55002;
       };
 
@@ -140,7 +137,7 @@ in {
       };
       redisPort = lib.mkOption {
         description = "Redis port";
-        type = lib.types.int;
+        type = lib.types.port;
         default = 6379;
       };
       dbHost = lib.mkOption {
@@ -150,7 +147,7 @@ in {
       };
       dbPort = lib.mkOption {
         description = "Postgres database port";
-        type = lib.types.int;
+        type = lib.types.port;
         default = 5432;
       };
       dbName = lib.mkOption {
@@ -168,7 +165,7 @@ in {
       };
       smtpPort = lib.mkOption {
         description = "SMTP port used when sending Emails to users";
-        type = lib.types.int;
+        type = lib.types.port;
         default = 587;
       };
       smtpFromAddress = lib.mkOption {
@@ -185,13 +182,8 @@ in {
       };
       elasticsearchPort = lib.mkOption {
         description = "Elasticsearch port";
-        type = lib.types.int;
+        type = lib.types.port;
         default = 9200;
-      };
-      dataDir = lib.mkOption {
-        description = "Directory for storing user uploads";
-        type = lib.types.str;
-        default = "/var/lib/mastodon";
       };
 
     };
@@ -200,25 +192,21 @@ in {
   config = lib.mkIf cfg.enable {
     systemd.services.mastodon-init-dirs = {
       script = ''
-        mkdir -p ${tmpDir}
-        mkdir -p ${logDir}
-        mkdir -p ${cfg.dataDir}
-        chown ${cfg.user}:${cfg.group} ${tmpDir}
-        chown ${cfg.user}:${cfg.group} ${logDir}
-        chown ${cfg.user}:${cfg.group} ${cfg.dataDir}
-
         umask 077
-        cat > ${tmpDir}/.secrets_env <<EOF
+        cat > /var/lib/mastodon/.secrets_env <<EOF
         SECRET_KEY_BASE=$(cat ${cfg.secretKeyBaseFile})
         OTP_SECRET=$(cat ${cfg.otpSecretFile})
         VAPID_PRIVATE_KEY=$(cat ${cfg.vapidPrivateKeyFile})
         DB_PASS=$(cat ${cfg.dbPassFile})
         SMTP_PASSWORD=$(cat ${cfg.smtpPasswordFile})
         EOF
-        chown ${cfg.user}:${cfg.group} ${tmpDir}/.secrets_env
       '';
       serviceConfig = {
         Type = "oneshot";
+        User = cfg.user;
+        Group = cfg.group;
+        LogsDirectory = "mastodon";
+        StateDirectory = "mastodon";
       };
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
@@ -235,7 +223,10 @@ in {
         Type = "oneshot";
         User = cfg.user;
         Group = cfg.group;
-        EnvironmentFile = "${tmpDir}/.secrets_env";
+        EnvironmentFile = "/var/lib/mastodon/.secrets_env";
+        PrivateTmp = true;
+        LogsDirectory = "mastodon";
+        StateDirectory = "mastodon";
       };
       after = [ "mastodon-init-dirs.service" "network.target" ];
       wantedBy = [ "multi-user.target" ];
@@ -255,7 +246,10 @@ in {
         User = cfg.user;
         Group = cfg.group;
         WorkingDirectory = pkgs.mastodon;
-        EnvironmentFile = "${tmpDir}/.secrets_env";
+        EnvironmentFile = "/var/lib/mastodon/.secrets_env";
+        PrivateTmp = true;
+        LogsDirectory = "mastodon";
+        StateDirectory = "mastodon";
       };
     };
 
@@ -273,7 +267,10 @@ in {
         User = cfg.user;
         Group = cfg.group;
         WorkingDirectory = pkgs.mastodon;
-        EnvironmentFile = "${tmpDir}/.secrets_env";
+        EnvironmentFile = "/var/lib/mastodon/.secrets_env";
+        PrivateTmp = true;
+        LogsDirectory = "mastodon";
+        StateDirectory = "mastodon";
       };
       path = with pkgs; [ file imagemagick ffmpeg ];
     };
@@ -292,7 +289,10 @@ in {
         User = cfg.user;
         Group = cfg.group;
         WorkingDirectory = pkgs.mastodon;
-        EnvironmentFile = "${tmpDir}/.secrets_env";
+        EnvironmentFile = "/var/lib/mastodon/.secrets_env";
+        PrivateTmp = true;
+        LogsDirectory = "mastodon";
+        StateDirectory = "mastodon";
       };
     };
 
@@ -301,7 +301,7 @@ in {
       virtualHosts."${cfg.localDomain}" = {
         root = "${pkgs.mastodon}/public/";
   
-        locations."/system/".alias = "${cfg.dataDir}/public-system/";
+        locations."/system/".alias = "/var/lib/mastodon/public-system/";
   
         locations."/" = {
           tryFiles = "$uri @proxy";
@@ -320,14 +320,11 @@ in {
     };
 
     users.users.mastodon = lib.mkIf (cfg.user == "mastodon") {
-      uid = config.ids.uids.mastodon;
       isSystemUser = true;
       inherit (cfg) group;
     };
 
-    users.groups.mastodon = lib.mkIf (cfg.group == "mastodon") {
-      gid = config.ids.gids.mastodon;
-    };
+    users.groups.mastodon = lib.mkIf (cfg.group == "mastodon") { };
   };
 
 }
