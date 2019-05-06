@@ -306,10 +306,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1hfwnb1g2752q44il09vpmlac6yc9y0ix1j9c0xqsxvhbv00lp04";
+      sha256 = "1n137f1dg3cwl8dwmss61kgi21n0vg6nnkd7vymxssd1vzl4r3fs";
       type = "gem";
     };
-    version = "0.1.2";
+    version = "0.1.3";
   };
   bootsnap = {
     dependencies = ["msgpack"];

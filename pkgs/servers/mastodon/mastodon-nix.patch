@@ -1,4 +1,4 @@
-From 8cdd2c80f2b486f1961e995efc6d51eaf59e8f9d Mon Sep 17 00:00:00 2001
+From 47ceaa3821f15f87b7000a2384e9078ae0399633 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Milan=20P=C3=A4ssler?= <me@pbb.lc>
 Date: Sun, 21 Apr 2019 22:49:37 +0200
 Subject: [PATCH] changes for nix packaging
@@ -24,7 +24,7 @@ index db00c24fb..e1e2caf95 100644
  gem 'idn-ruby', require: 'idn'
  gem 'kaminari', '~> 1.1'
 diff --git a/Gemfile.lock b/Gemfile.lock
-index 7ab907f6d..3df345661 100644
+index 59b34a185..754f807f9 100644
 --- a/Gemfile.lock
 +++ b/Gemfile.lock
 @@ -9,6 +9,7 @@ GIT
@@ -36,14 +36,14 @@ index 7ab907f6d..3df345661 100644
      http_parser.rb (0.6.1)
  
 diff --git a/package.json b/package.json
-index 67396ccc3..61743a9b1 100644
+index 67396ccc3..6cffa9c15 100644
 --- a/package.json
 +++ b/package.json
 @@ -1,6 +1,7 @@
  {
    "name": "mastodon",
    "license": "AGPL-3.0-or-later",
-+  "version": "2.8.1",
++  "version": "2.8.2",
    "engines": {
      "node": ">=8 <11"
    },

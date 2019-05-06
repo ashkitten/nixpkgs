@@ -1,7 +1,7 @@
 {
   "name": "mastodon",
   "license": "AGPL-3.0-or-later",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "engines": {
     "node": ">=8 <11"
   },
