@@ -32,11 +32,19 @@ in {
   options = {
     services.mastodon = {
       enable = lib.mkEnableOption "Mastodon federated social network";
-      configureNginx = lib.mkOption {
-        description = "Use nginx as reverse proxy for mastodon";
-        type = lib.types.bool;
-        default = true;
-      };
+      configureNginx = lib.mkEnableOption ''
+        Configure nginx as reverse proxy for mastodon
+        Alternatively you can configure a reverse-proxy of your choice to serve these paths:
+
+        / -> $(nix-instantiate --eval '&lt;nixpkgs&gt;' -A mastodon.outPath)/public
+        / -> 127.0.0.1:{{ webPort }} (if there was no file in the directory above)
+        /system/ -> /var/lib/mastodon/public-system/
+        /api/v1/streaming/ -> 127.0.0.1:{{ streamingPort }}
+
+        Make sure that websockets are forwarded properly. You might want to set up caching
+        of some requests, take a look at mastodon's provided nginx configuration at
+        https://github.com/tootsuite/mastodon/blob/master/dist/nginx.conf
+      '';
       user = lib.mkOption {
         description = ''
           User under which mastodon runs
@@ -157,6 +165,7 @@ in {
       };
       localDomain = lib.mkOption {
         description = "The domain serving your Mastodon instance";
+        default = "social.example.org";
         type = lib.types.str;
       };
       smtpServer = lib.mkOption {
