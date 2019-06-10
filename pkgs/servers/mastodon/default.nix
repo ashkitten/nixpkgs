@@ -2,7 +2,7 @@
   stdenv, yarn, lib, ... }:
 
 let
-  version = "v2.8.2";
+  version = "v2.9.0rc1";
 
   src = stdenv.mkDerivation {
     name = "mastodon-src";
@@ -10,7 +10,7 @@ let
       owner = "tootsuite";
       repo = "mastodon";
       rev = version;
-      sha256 = "0axjlfbm4pjzlhj0zpn8dqgm9fvncbw0lkx282mih9c24sjp922y";
+      sha256 = "1ix3r7j12r6rirfbbzqsir0v8rn2mkg7jc8dapmvf2ck3fai2gdg";
     };
     patches = [ ./mastodon-nix.patch ];
     dontConfigure = true;
