@@ -43,7 +43,7 @@ index 26ff64851..8efe15884 100644
  {
    "name": "mastodon",
    "license": "AGPL-3.0-or-later",
-+	"version": "2.9.1-rc1",
++	"version": "2.9.0",
    "engines": {
      "node": ">=8.12 <12"
    },
