@@ -1,9 +1,4 @@
-{ pkgs, stdenv, fetchFromGitHub, makeWrapper, makeDesktopItem, electron, riot-web }:
-
-# Note for maintainers:
-# Versions of `riot-web` and `riot-desktop` should be kept in sync.
-
-with (import ./yarn2nix.nix { inherit pkgs; });
+{ pkgs, stdenv, fetchFromGitHub, makeWrapper, makeDesktopItem, electron, riot-web, mkYarnPackage }:
 
 let
   executableName = "riot-desktop";

@@ -6945,6 +6945,9 @@ in
 
   yarn = callPackage ../development/tools/yarn  { };
 
+  inherit (callPackage ../development/tools/yarn2nix { })
+    yarn2nix mkYarnPackage;
+
   yasr = callPackage ../applications/audio/yasr { };
 
   yank = callPackage ../tools/misc/yank { };
@@ -24398,5 +24401,7 @@ in
   dapper = callPackage ../development/tools/dapper { };
 
   kube3d =  callPackage ../applications/networking/cluster/kube3d {};
+
+  mastodon = callPackage ../servers/mastodon {};
 
 }
