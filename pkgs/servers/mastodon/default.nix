@@ -2,15 +2,15 @@
   stdenv, yarn, lib, ... }:
 
 let
-  version = "v2.9.0";
+  version = "94ddb8d1f50bdbd92b5ec9490c8471df234e5e04";
 
   src = stdenv.mkDerivation {
     name = "mastodon-src";
     src = fetchFromGitHub {
-      owner = "tootsuite";
+      owner = "ashkitten";
       repo = "mastodon";
       rev = version;
-      sha256 = "0wh2qikmmwq96pgmrdw0qj9884i718gvif34z54659x75n75j392";
+      sha256 = "0jgsk3gmshyqmhahfvncqx6f4anqdfw568494ji9k9sk546yr4cz";
     };
     patches = [ ./mastodon-nix.patch ];
     dontConfigure = true;
@@ -31,6 +31,7 @@ let
   mastodon-js-modules = mkYarnPackage {
     name = "mastodon-modules";
     yarnNix = ./yarn.nix;
+    yarnLock = ./yarn.lock;
     packageJSON = ./package.json;
     inherit src;
   };

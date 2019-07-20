@@ -1,20 +1,8 @@
-From 823ddffb80729f400415a14ae18179f12e3b2c70 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Milan=20P=C3=A4ssler?= <me@pbb.lc>
-Date: Tue, 11 Jun 2019 00:08:13 +0200
-Subject: [PATCH] changes for nix packaging
-
----
- Gemfile      | 2 +-
- Gemfile.lock | 1 +
- package.json | 3 ++-
- yarn.lock    | 4 ++--
- 4 files changed, 6 insertions(+), 4 deletions(-)
-
 diff --git a/Gemfile b/Gemfile
-index 4fd981f75..d9ba11dca 100644
+index 9e28b68a1..d57e1b855 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -52,7 +52,7 @@ gem 'redis-namespace', '~> 1.5'
+@@ -53,7 +53,7 @@ gem 'html2text'
  gem 'htmlentities', '~> 4.3'
  gem 'http', '~> 3.3'
  gem 'http_accept_language', '~> 2.1'
@@ -24,7 +12,7 @@ index 4fd981f75..d9ba11dca 100644
  gem 'idn-ruby', require: 'idn'
  gem 'kaminari', '~> 1.1'
 diff --git a/Gemfile.lock b/Gemfile.lock
-index d8a68d8c9..afd3cd348 100644
+index 2e2946f12..ea1221fee 100644
 --- a/Gemfile.lock
 +++ b/Gemfile.lock
 @@ -9,6 +9,7 @@ GIT
@@ -36,18 +24,17 @@ index d8a68d8c9..afd3cd348 100644
      http_parser.rb (0.6.1)
  
 diff --git a/package.json b/package.json
-index 26ff64851..8efe15884 100644
+index a56cc75ea..5fb708c7b 100644
 --- a/package.json
 +++ b/package.json
-@@ -1,6 +1,7 @@
+@@ -1,5 +1,6 @@
  {
    "name": "mastodon",
++  "version": "2.9.2+glitch",
    "license": "AGPL-3.0-or-later",
-+	"version": "2.9.0",
    "engines": {
      "node": ">=8.12 <12"
-   },
-@@ -89,7 +90,7 @@
+@@ -91,7 +92,7 @@
      "cssnano": "^4.1.10",
      "detect-passive-events": "^1.0.2",
      "dotenv": "^8.0.0",
@@ -57,21 +44,18 @@ index 26ff64851..8efe15884 100644
      "escape-html": "^1.0.3",
      "exif-js": "^2.3.0",
 diff --git a/yarn.lock b/yarn.lock
-index c4740dabb..4b7127359 100644
+index 63badbec1..a7f38ac5f 100644
 --- a/yarn.lock
 +++ b/yarn.lock
-@@ -3346,9 +3346,9 @@ elliptic@^6.0.0:
+@@ -3379,9 +3379,9 @@ elliptic@^6.0.0:
      minimalistic-assert "^1.0.0"
      minimalistic-crypto-utils "^1.0.0"
  
 -emoji-mart@Gargron/emoji-mart#build:
 +"emoji-mart@git+https://github.com/Gargron/emoji-mart#build":
-   version "2.6.2"
--  resolved "https://codeload.github.com/Gargron/emoji-mart/tar.gz/ff00dc470b5b2d9f145a6d6e977a54de5df2b4c9"
-+  resolved "git+https://github.com/Gargron/emoji-mart#ff00dc470b5b2d9f145a6d6e977a54de5df2b4c9"
+   version "2.6.3"
+-  resolved "https://codeload.github.com/Gargron/emoji-mart/tar.gz/934f314fd8322276765066e8a2a6be5bac61b1cf"
++  resolved "git+https://github.com/Gargron/emoji-mart#934f314fd8322276765066e8a2a6be5bac61b1cf"
  
- emoji-regex@^7.0.2:
+ emoji-regex@^7.0.1, emoji-regex@^7.0.2:
    version "7.0.3"
--- 
-2.21.0
-
