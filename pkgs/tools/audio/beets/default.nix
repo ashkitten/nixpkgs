@@ -29,6 +29,7 @@
 
 # External plugins
 , enableAlternatives   ? false
+, enableBandcamp       ? false
 , enableCheck          ? false, liboggz ? null
 , enableCopyArtifacts  ? false
 
@@ -99,6 +100,7 @@ let
   # This is a stripped down beets for testing of the external plugins.
   externalTestArgs.beets = (beets.override {
     enableAlternatives = false;
+    enableBandcamp = false;
     enableCopyArtifacts = false;
   }).overrideAttrs (stdenv.lib.const {
     doInstallCheck = false;
@@ -108,6 +110,7 @@ let
 
   plugins = {
     alternatives = callPackage ./alternatives-plugin.nix pluginArgs;
+    bandcamp = callPackage ./bandcamp-plugin.nix pluginArgs;
     check = callPackage ./check-plugin.nix pluginArgs;
     copyartifacts = callPackage ./copyartifacts-plugin.nix pluginArgs;
   };
@@ -156,6 +159,7 @@ in pythonPackages.buildPythonApplication rec {
     ++ optional enableThumbnails    pythonPackages.pyxdg
     ++ optional enableWeb           pythonPackages.flask
     ++ optional enableAlternatives  plugins.alternatives
+    ++ optional enableBandcamp      plugins.bandcamp
     ++ optional enableCopyArtifacts plugins.copyartifacts;
 
   buildInputs = [
