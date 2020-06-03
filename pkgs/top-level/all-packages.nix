@@ -20795,7 +20795,7 @@ in
     python = python3;
   };
 
-  inherit (mopidyPackages) mopidy mopidy-gmusic mopidy-local-images mopidy-local-sqlite mopidy-spotify mopidy-moped mopidy-mopify mopidy-spotify-tunigo mopidy-youtube mopidy-soundcloud mopidy-musicbox-webclient mopidy-iris mopidy-mpd;
+  inherit (mopidyPackages) mopidy mopidy-gmusic mopidy-local mopidy-spotify mopidy-moped mopidy-mopify mopidy-spotify-tunigo mopidy-youtube mopidy-soundcloud mopidy-musicbox-webclient mopidy-iris mopidy-mpd;
 
   motif = callPackage ../development/libraries/motif { };
 
