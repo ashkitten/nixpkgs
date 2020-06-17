@@ -1,4 +1,4 @@
-{ lib, fetchFromGitHub, buildPythonApplication, pyside2, shiboken2, twisted, certifi, qt5 }:
+{ lib, fetchFromGitHub, buildPythonApplication, pyside2, shiboken2, twisted, certifi, youtube-dl, qt5 }:
 
 buildPythonApplication rec {
   pname = "syncplay";
@@ -13,13 +13,13 @@ buildPythonApplication rec {
     sha256 = "1hxmd13sff51lh9l3vpk33qrzf7gi58c76bc01iqimp17sxwfz3k";
   };
 
-  propagatedBuildInputs = [ pyside2 shiboken2 twisted certifi ] ++ twisted.extras.tls;
+  propagatedBuildInputs = [ pyside2 shiboken2 twisted certifi youtube-dl ] ++ twisted.extras.tls;
   nativeBuildInputs = [ qt5.wrapQtAppsHook ];
 
   makeFlags = [ "DESTDIR=" "PREFIX=$(out)" ];
 
   postFixup = ''
-    wrapQtApp $out/bin/syncplay
+    wrapQtApp $out/bin/syncplay --prefix PYTHONPATH : "$PYTHONPATH"
   '';
 
   meta = with lib; {
