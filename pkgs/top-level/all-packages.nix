@@ -6424,6 +6424,8 @@ in
 
   matrix-corporal = callPackage ../servers/matrix-corporal { };
 
+  matrix-media-repo = callPackage ../servers/matrix-media-repo { };
+
   mautrix-signal = recurseIntoAttrs (callPackage ../servers/mautrix-signal { });
 
   mautrix-telegram = recurseIntoAttrs (callPackage ../servers/mautrix-telegram { });
