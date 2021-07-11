@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
     patchelf --add-needed "${SDL2}/lib/libSDL2-2.0.so.0" "$out/lib/libopenxr_loader.so"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Khronos OpenXR loader";
     homepage    = "https://www.khronos.org/openxr";
     platforms   = platforms.linux;
