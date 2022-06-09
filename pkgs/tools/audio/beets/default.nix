@@ -72,6 +72,7 @@ lib.makeExtensible (
 
     alternatives = callPackage ./plugins/alternatives.nix { beets = self.beets-minimal; };
     audible = callPackage ./plugins/audible.nix { beets = self.beets-minimal; };
+    beetcamp = callPackage ./plugins/beetcamp.nix { beets = self.beets-minimal; };
     copyartifacts = callPackage ./plugins/copyartifacts.nix { beets = self.beets-minimal; };
   }
   // lib.optionalAttrs config.allowAliases {
