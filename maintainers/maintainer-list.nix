@@ -21062,6 +21062,12 @@
     keys = [ { fingerprint = "6AE2 A847 23D5 6D98 5B34  0BC0 8E5F A470 9F69 E911"; } ];
     name = "Ralph Seichter";
   };
+  rrix = {
+    email = "nixpkgs@whatthefuck.computer";
+    name = "Ryan Rix";
+    github = "rrix";
+    githubId = 138102;
+  };
   rski = {
     name = "rski";
     email = "rom.skiad+nix@gmail.com";
