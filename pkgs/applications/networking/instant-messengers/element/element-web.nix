@@ -56,6 +56,7 @@ mkYarnPackage rec {
 
     export VERSION=${version}
     yarn build:res --offline
+    yarn build:module_system --offline
     yarn build:bundle --offline
 
     runHook postBuild
