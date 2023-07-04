@@ -22,19 +22,19 @@ in
           Nix store, by specifying placeholder variables as the option value in Nix and
           setting these variables accordingly in the environment file.
           <programlisting>
-            # example snippet of matrix-media-repo config
+            \# example snippet of matrix-media-repo config
             services.matrix-media-repo.settings.datastores = [
               {
                 type = "s3";
                 opts = {
                   accessSecret = "$ACCESS_SECRET";
-                  # [...]
+                  \# [...]
                 };
               }
             ];
           </programlisting>
           <programlisting>
-            # content of the environment file
+            \# content of the environment file
             ACCESS_SECRET=yoursecretgoeshere
           </programlisting>
           Note that this file needs to be available on the host on which
