@@ -110,7 +110,11 @@ in
                     example = "file";
                     description = lib.mdDoc "Datastore type";
                   };
-                  enabled = mkEnableOption "the datastore" // { default = true; };
+                  id = mkOption {
+                    type = types.str;
+                    example = "e9ce13bbb062383ce1bcee76414058668877f2d51635810652335374336";
+                    description = lib.mdDoc "Datastore ID";
+                  };
                   forKinds = mkOption {
                     type = types.listOf types.str;
                     default = [ "all" ];
