@@ -43,7 +43,7 @@ in
       };
       settings = mkOption {
         default = {};
-        description = lib.mdDoc ''
+        description = ''
           Configuration for matrix-media-repo. Refer to
           <https://github.com/turt2live/matrix-media-repo/blob/master/config.sample.yaml>
           for available options.
@@ -54,20 +54,20 @@ in
             repo.bindAddress = mkOption {
               type = types.str;
               default = "127.0.0.1";
-              description = lib.mdDoc "Address to listen for HTTP requests on.";
+              description = "Address to listen for HTTP requests on.";
             };
             repo.port = mkOption {
               type = types.port;
               default = 8000;
-              description = lib.mdDoc "Port to listen for HTTP requests on.";
+              description = "Port to listen for HTTP requests on.";
             };
             database.postgres = mkOption {
               type = types.str;
               example = "postgres://your_username:your_password@localhost/database_name?sslmode=require";
-              description = lib.mdDoc "Postgresql connection string. This is *not* the same as your homeserver's database.";
+              description = "Postgresql connection string. This is *not* the same as your homeserver's database.";
             };
             homeservers = mkOption {
-              description = lib.mdDoc ''
+              description = ''
                 List of homeservers this media repository is known to control.
                 Servers not listed here will not be able to upload media.
               '';
@@ -77,12 +77,12 @@ in
                   name = mkOption {
                     type = types.str;
                     example = "example.org";
-                    description = lib.mdDoc "This should match the server_name of your homeserver.";
+                    description = "This should match the server_name of your homeserver.";
                   };
                   csApi = mkOption {
                     type = types.str;
                     example = "https://example.org/";
-                    description = lib.mdDoc "The base URL to where the homeserver can actually be reached.";
+                    description = "The base URL to where the homeserver can actually be reached.";
                   };
                 };
               });
@@ -91,7 +91,7 @@ in
               type = types.listOf types.str;
               default = [];
               example = literalExpression ''[ "@your_username:example.org" ]'';
-              description = lib.mdDoc "Users that have full access to the administrative functions of the media repository.";
+              description = "Users that have full access to the administrative functions of the media repository.";
             };
             datastores = mkOption {
               default = [
@@ -102,18 +102,18 @@ in
                   };
                 }
               ];
-              description = lib.mdDoc "List of stores where media should be persisted.";
+              description = "List of stores where media should be persisted.";
               type = types.listOf (types.submodule {
                 options = {
                   type = mkOption {
                     type = types.str;
                     example = "file";
-                    description = lib.mdDoc "Datastore type";
+                    description = "Datastore type";
                   };
                   id = mkOption {
                     type = types.str;
                     example = "e9ce13bbb062383ce1bcee76414058668877f2d51635810652335374336";
-                    description = lib.mdDoc "Datastore ID";
+                    description = "Datastore ID";
                   };
                   forKinds = mkOption {
                     type = types.listOf types.str;
@@ -121,7 +121,7 @@ in
                     example = literalExpression ''
                       [ "thumbnails" "remote_media" "local_media" "archives" ]
                     '';
-                    description = lib.mdDoc "What kinds of media to use this datastore for.";
+                    description = "What kinds of media to use this datastore for.";
                   };
                   opts = mkOption {
                     type = types.submodule { freeformType = format.type; };
