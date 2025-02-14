@@ -6,20 +6,20 @@
   propagateBeets ? false
 }:
 
-python3Packages.buildPythonApplication {
+python3Packages.buildPythonApplication rec {
   pname = "beets-beetcamp";
-  version = "unstable-2022-06-07";
+  version = "0.20.0";
 
   src = fetchFromGitHub {
     repo = "beetcamp";
     owner = "snejus";
-    rev = "118d4239bd570a59997f13ac0920e6e92890ac67";
-    sha256 = "sha256-yrlpgLdNEzlWMY7Cns0UE93oEbpkOoYZHGLpui6MfC0=";
+    rev = version;
+    sha256 = "sha256-k8IbzD59PU7iSUUe4USu45fFyob8mWe0EGreWt2x6xI=";
   };
 
   format = "pyproject";
 
-  propagatedBuildInputs = with python3Packages; [ setuptools poetry requests cached-property pycountry dateutil ordered-set ]
+  propagatedBuildInputs = with python3Packages; [ setuptools poetry-core requests cached-property pycountry dateutil ordered-set httpx ]
                                                 ++ (lib.optional propagateBeets [ beets ]);
 
   checkInputs = with python3Packages; [
